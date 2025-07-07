@@ -4,6 +4,7 @@ import ErrorPage from "../pages/Error/ErrorPage";
 import Home from "../pages/page/Home/Home";
 import Login from "../pages/page/JoinUs/Login";
 import JoinUs from "../pages/page/JoinUs/JoinUs";
+import Register from "../pages/page/JoinUs/Register";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -13,6 +14,8 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "/join-us", Component: JoinUs },
       { path: "/login", Component: Login },
+      { path: "/register", Component: Register },
+      
     ],
   },
 ]);
