@@ -1,11 +1,201 @@
-import React from 'react';
+import React, { useState } from "react";
+import { Link, Outlet } from "react-router";
+import {
+  FaBell,
+  FaEnvelope,
+  FaUserCircle,
+  FaTachometerAlt,
+  FaUsersCog,
+  FaCog,
+  FaQuestionCircle,
+  FaSignOutAlt,
+  FaBars,
+} from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const DashboardLayout = () => {
-    return (
-        <div>
-            Dashboard layout 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth() || {};
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout()
+          .then(() => {
+            Swal.fire(
+              "Logged out!",
+              "You have been successfully logged out.",
+              "success"
+            );
+          })
+          .catch((err) => console.error(err));
+      }
+    });
+  };
+
+  return (
+    <div className="min-h-screen flex bg-base-200">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-md hidden lg:flex flex-col items-center py-6 px-4">
+        {/* Admin Avatar */}
+        <div className="flex flex-col items-center mb-6">
+           <img className="rounded-full"
+              src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
+              alt="User"
+            />
+          <h2 className="mt-3 text-lg font-semibold text-gray-700">
+            {user?.displayName || "Admin Name"}
+          </h2>
         </div>
-    );
+
+        {/* Navigation Links */}
+        <nav className="flex flex-col gap-3 w-full">
+          <Link
+            to="/dashboard"
+            onClick={closeMobileMenu}
+            className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+          >
+            <FaTachometerAlt /> Dashboard
+          </Link>
+          <Link
+            to="/dashboard/users"
+            onClick={closeMobileMenu}
+            className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+          >
+            <FaUsersCog /> Manage Users
+          </Link>
+          <Link
+            to="/dashboard/settings"
+            onClick={closeMobileMenu}
+            className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+          >
+            <FaCog /> Settings
+          </Link>
+        </nav>
+      </aside>
+
+      {/* Mobile Sidebar Toggle */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <button
+          onClick={toggleMobileMenu}
+          className="btn btn-circle btn-outline text-xl"
+        >
+          <FaBars />
+        </button>
+      </div>
+
+      {/* Mobile Sidebar Drawer */}
+      {isMobileMenuOpen && (
+        <div className="fixed top-0 left-0 w-64 h-screen bg-white shadow-md p-4 z-40 overflow-y-auto">
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
+              alt="User"
+            />
+            <h2 className="mt-3 text-lg font-semibold text-gray-700">
+              {user?.displayName || "Admin Name"}
+            </h2>
+          </div>
+          <nav className="flex flex-col gap-3">
+            <Link
+              to="/dashboard"
+              onClick={closeMobileMenu}
+              className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+            >
+              <FaTachometerAlt /> Dashboard
+            </Link>
+            <Link
+              to="/dashboard/users"
+              onClick={closeMobileMenu}
+              className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+            >
+              <FaUsersCog /> Manage Users
+            </Link>
+            <Link
+              to="/dashboard/settings"
+              onClick={closeMobileMenu}
+              className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+            >
+              <FaCog /> Settings
+            </Link>
+          </nav>
+        </div>
+      )}
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col">
+        {/* Topbar */}
+        <header className="bg-white shadow-md flex items-center justify-between px-4 py-3">
+          <div></div>
+          <div className="flex items-center gap-4 ml-auto">
+            <FaBell className="text-xl cursor-pointer" />
+            <FaEnvelope className="text-xl cursor-pointer" />
+
+            {/* Profile Dropdown */}
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    src={
+                      user?.photoURL || "https://i.ibb.co/0Jmshvb/avatar.png"
+                    }
+                    alt="User"
+                  />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
+              >
+                <li>
+                  <Link to="/profile">
+                    <FaUserCircle /> My Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/settings">
+                    <FaCog /> Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/help">
+                    <FaQuestionCircle /> Help
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>
+                    <FaSignOutAlt /> Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        {/* Dynamic Content */}
+        <main className="p-4">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default DashboardLayout;
