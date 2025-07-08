@@ -56,10 +56,11 @@ const DashboardLayout = () => {
       <aside className="w-64 bg-white shadow-md hidden lg:flex flex-col items-center py-6 px-4">
         {/* Admin Avatar */}
         <div className="flex flex-col items-center mb-6">
-           <img className="rounded-full"
-              src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
-              alt="User"
-            />
+          <img
+            className="rounded-full w-12 h-12"
+            src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
+            alt="User"
+          />
           <h2 className="mt-3 text-lg font-semibold text-gray-700">
             {user?.displayName || "Admin Name"}
           </h2>
@@ -68,26 +69,35 @@ const DashboardLayout = () => {
         {/* Navigation Links */}
         <nav className="flex flex-col gap-3 w-full">
           <Link
-            to="/dashboard"
-            onClick={closeMobileMenu}
+            to="/dashboard/profile"
             className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
           >
-            <FaTachometerAlt /> Dashboard
+            <FaTachometerAlt /> My Profile
           </Link>
           <Link
-            to="/dashboard/users"
-            onClick={closeMobileMenu}
+            to="/dashboard/requestedMeals"
             className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
           >
-            <FaUsersCog /> Manage Users
+            <FaUsersCog /> Requested Meals
           </Link>
           <Link
-            to="/dashboard/settings"
-            onClick={closeMobileMenu}
+            to="/dashboard/myReviews"
             className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
           >
-            <FaCog /> Settings
+            <FaCog /> My Reviews
           </Link>
+          <Link
+            to="/dashboard/paymentHistory"
+            className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+          >
+            <FaCog /> Payment History
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+          >
+            <FaSignOutAlt /> Logout
+          </button>
         </nav>
       </aside>
 
@@ -106,7 +116,10 @@ const DashboardLayout = () => {
         <div className="fixed top-0 left-0 w-64 h-screen bg-white shadow-md p-4 z-40 overflow-y-auto">
           <div className="flex flex-col items-center mb-6">
             <img
-              src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
+              className="rounded-full w-12 h-12"
+              src={
+                user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"
+              }
               alt="User"
             />
             <h2 className="mt-3 text-lg font-semibold text-gray-700">
@@ -115,26 +128,39 @@ const DashboardLayout = () => {
           </div>
           <nav className="flex flex-col gap-3">
             <Link
-              to="/dashboard"
+              to="/dashboard/profile"
               onClick={closeMobileMenu}
               className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
             >
-              <FaTachometerAlt /> Dashboard
+              <FaUserCircle /> My Profile
             </Link>
             <Link
-              to="/dashboard/users"
+              to="/dashboard/requestedMeals"
               onClick={closeMobileMenu}
               className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
             >
-              <FaUsersCog /> Manage Users
+              <FaQuestionCircle /> Requested Meals
             </Link>
             <Link
-              to="/dashboard/settings"
+              to="/dashboard/myReviews"
               onClick={closeMobileMenu}
               className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
             >
-              <FaCog /> Settings
+              <FaQuestionCircle /> My Reviews
             </Link>
+            <Link
+              to="/dashboard/paymentHistory"
+              onClick={closeMobileMenu}
+              className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+            >
+              <FaQuestionCircle /> Payment History
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
+            >
+              <FaSignOutAlt /> Logout
+            </button>
           </nav>
         </div>
       )}
@@ -143,8 +169,7 @@ const DashboardLayout = () => {
       <div className="flex-1 flex flex-col">
         {/* Topbar */}
         <header className="bg-white shadow-md flex items-center justify-between px-4 py-3">
-          <div></div>
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="ml-auto flex items-center gap-4">
             <FaBell className="text-xl cursor-pointer" />
             <FaEnvelope className="text-xl cursor-pointer" />
 
@@ -153,8 +178,10 @@ const DashboardLayout = () => {
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img
+                    className="rounded-full w-12 h-12"
                     src={
-                      user?.photoURL || "https://i.ibb.co/0Jmshvb/avatar.png"
+                      user?.photoURL ||
+                      "https://i.ibb.co/fY34pzmL/download-13.jpg"
                     }
                     alt="User"
                   />
@@ -165,18 +192,23 @@ const DashboardLayout = () => {
                 className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
               >
                 <li>
-                  <Link to="/profile">
+                  <Link to="/dashboard/profile">
                     <FaUserCircle /> My Profile
                   </Link>
                 </li>
                 <li>
-                  <Link to="/settings">
-                    <FaCog /> Settings
+                  <Link to="/dashboard/requestedMeals">
+                    <FaQuestionCircle /> Requested Meals
                   </Link>
                 </li>
                 <li>
-                  <Link to="/help">
-                    <FaQuestionCircle /> Help
+                  <Link to="/dashboard/myReviews">
+                    <FaQuestionCircle /> My Reviews
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/paymentHistory">
+                    <FaQuestionCircle /> Payment History
                   </Link>
                 </li>
                 <li>
