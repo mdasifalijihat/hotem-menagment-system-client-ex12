@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import {
   FaBell,
   FaEnvelope,
@@ -10,6 +10,7 @@ import {
   FaQuestionCircle,
   FaSignOutAlt,
   FaBars,
+  FaHome,
 } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
@@ -55,6 +56,7 @@ const DashboardLayout = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-md hidden lg:flex flex-col items-center py-6 px-4">
         {/* Admin Avatar */}
+
         <div className="flex flex-col items-center mb-6">
           <img
             className="rounded-full w-12 h-12"
@@ -169,6 +171,14 @@ const DashboardLayout = () => {
       <div className="flex-1 flex flex-col">
         {/* Topbar */}
         <header className="bg-white shadow-md flex items-center justify-between px-4 py-3">
+          <div className="ml-12 items-center pt-3">
+            <NavLink
+              to="/"
+              className="flex items-center gap-2 mb-4 text-blue-600 font-semibold"
+            >
+              <FaHome /> Back to Home
+            </NavLink>
+          </div>
           <div className="ml-auto flex items-center gap-4">
             <FaBell className="text-xl cursor-pointer" />
             <FaEnvelope className="text-xl cursor-pointer" />
