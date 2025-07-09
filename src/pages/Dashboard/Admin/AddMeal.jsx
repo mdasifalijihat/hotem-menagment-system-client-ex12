@@ -13,13 +13,12 @@ const AddMeal = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
-
+   } = useForm();
   const onSubmit = async (data) => {
     const imageFile = { image: data.image[0] };
 
     try {
-      // Upload image to imgbb
+      // Upload image
       const res = await axios.post(image_upload_url, imageFile, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -44,25 +43,26 @@ const AddMeal = () => {
           reviews: 0,
         };
 
-        // Send meal data to your server
-        await axiosSecure.post(
-          `${import.meta.env.VITE_API_URL}/addMeals`,
-          mealData
-        );
+        // console.log(imageUrl, mealData);
 
-        reset();
-
-        Swal.fire({
-          title: "Success!",
-          text: "Meal added successfully!",
-          icon: "success",
-          confirmButtonText: "Cool",
+        axiosSecure.post("/addMeals", mealData).then((res) => {
+          // console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Success!",
+              text: "Meal added successfully!",
+              icon: "success",
+              confirmButtonText: "Cool",
+            });
+          }
         });
-      }
+      } 
     } catch (error) {
       console.error(error);
       Swal.fire("Oops!", "Something went wrong", "error");
     }
+
+    reset();
   };
 
   return (
