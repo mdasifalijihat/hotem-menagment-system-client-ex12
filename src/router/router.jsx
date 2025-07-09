@@ -22,6 +22,8 @@ import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal";
 import AdminInformation from "../pages/Dashboard/Admin/AdminInformation";
 import MealDetails from "../pages/Dashboard/Admin/allMailsup/MealDetails";
 import UpdateMeal from "../pages/Dashboard/Admin/allMailsup/UpdateMeal";
+import Meals from "../pages/page/Meals/Meals";
+import UserMealDetails from "../pages/page/Meals/UserMealDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +34,8 @@ export const router = createBrowserRouter([
       { path: "/join-us", Component: JoinUs },
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
+      { path: "/meals", Component: Meals },
+      {path:'/meals/:id', element: <UserMealDetails/>}
     ],
   },
   {
