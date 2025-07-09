@@ -1,12 +1,13 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../api/useAxiosSecure";
+import axios from "axios";
 
 const image_hosting_key = import.meta.env.VITE_IMGBB_API_KEY;
 const image_upload_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddMeal = () => {
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -44,7 +45,10 @@ const AddMeal = () => {
         };
 
         // Send meal data to your server
-        await axios.post(`${import.meta.env.VITE_API_URL}/meals`, mealData);
+        await axiosSecure.post(
+          `${import.meta.env.VITE_API_URL}/addMeals`,
+          mealData
+        );
 
         reset();
 
