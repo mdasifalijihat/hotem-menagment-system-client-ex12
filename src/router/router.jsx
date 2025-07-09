@@ -20,6 +20,8 @@ import ServeMeals from "../pages/Dashboard/Admin/ServeMeals";
 import UpcomingMeal from "../pages/Dashboard/Admin/UpcomingMeal";
 import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal";
 import AdminInformation from "../pages/Dashboard/Admin/AdminInformation";
+import MealDetails from "../pages/Dashboard/Admin/allMailsup/MealDetails";
+import UpdateMeal from "../pages/Dashboard/Admin/allMailsup/UpdateMeal";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -53,9 +55,17 @@ export const router = createBrowserRouter([
     children: [
       { path: "", element: <AdminInformation /> },
       { path: "manage-users", element: <ManageUsers /> },
+
+      // Meals
       { path: "add-meal", element: <AddMeal /> },
       { path: "all-meals", element: <AllMeals /> },
+      { path: "meal/:id", element: <MealDetails /> },
+      { path: "updateMeal/:id", element: <UpdateMeal /> },
+
+      // Reviews
       { path: "all-reviews", element: <AllReviews /> },
+
+      // Upcoming Meals
       { path: "serve-meals", element: <ServeMeals /> },
       { path: "upcoming-meals", element: <UpcomingMeal /> },
       { path: "add-upcoming-meal", element: <AddUpcomingMeal /> },

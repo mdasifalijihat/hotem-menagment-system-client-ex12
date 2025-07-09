@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
-
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../api/useAxiosSecure";
 
@@ -9,10 +8,10 @@ const AllMeals = () => {
   const [meals, setMeals] = useState([]);
   const [sortBy, setSortBy] = useState("");
 
-  // Fetch meals from server
   const fetchMeals = async () => {
     try {
-      const res = await axiosSecure.get(`/allMeals?sortBy=${sortBy}`);
+      const url = sortBy ? `/allMeals?sortBy=${sortBy}` : `/allMeals`;
+      const res = await axiosSecure.get(url);
       setMeals(res.data);
     } catch (error) {
       console.error("Error fetching meals:", error);
@@ -24,7 +23,6 @@ const AllMeals = () => {
     fetchMeals();
   }, [sortBy]);
 
-  // Handle delete
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -50,7 +48,7 @@ const AllMeals = () => {
     <div className="max-w-6xl mx-auto p-6">
       <h2 className="text-3xl font-bold mb-6 text-center">All Meals</h2>
 
-      <div className="mb-4 flex flex-col md:flex-row gap-3 justify-between items-center">
+      <div className="mb-6 flex flex-col md:flex-row gap-3 justify-between items-center">
         <div className="text-lg font-semibold">Sort By:</div>
         <div className="flex gap-2">
           <button
@@ -67,7 +65,7 @@ const AllMeals = () => {
             }`}
             onClick={() => setSortBy("reviews")}
           >
-            Reviews Count
+            Reviews
           </button>
           <button
             className="btn btn-sm btn-outline"
@@ -78,49 +76,66 @@ const AllMeals = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-lg shadow">
         <table className="table table-zebra w-full">
-          <thead>
-            <tr className="bg-base-200">
+          <thead className="bg-base-200">
+            <tr>
               <th>#</th>
               <th>Meal Title</th>
               <th>Likes</th>
-              <th>Reviews Count</th>
+              <th>Reviews</th>
               <th>Rating</th>
               <th>Distributor</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {meals.map((meal, index) => (
-              <tr key={meal._id}>
-                <th>{index + 1}</th>
-                <td>{meal.title}</td>
-                <td>{meal.likes}</td>
-                <td>{meal.reviews}</td>
-                <td>{meal.rating}</td>
-                <td>{meal.distributor}</td>
-                <td className="flex flex-wrap gap-2 justify-center">
-                  <Link to={`/dashboard/updateMeal/${meal._id}`}>
-                    <button className="btn btn-xs btn-warning">Update</button>
-                  </Link>
-                  <button
-                    className="btn btn-xs btn-error"
-                    onClick={() => handleDelete(meal._id)}
-                  >
-                    Delete
-                  </button>
-                  <Link to={`/meal/${meal._id}`}>
-                    <button className="btn btn-xs btn-info">View</button>
-                  </Link>
+            {meals.length > 0 ? (
+              meals.map((meal, index) => (
+                <tr key={meal._id}>
+                  <th>{index + 1}</th>
+                  <td className="font-medium">{meal.title}</td>
+                  <td>
+                    <span className="badge badge-primary">{meal.likes}</span>
+                  </td>
+                  <td>
+                    <span className="badge badge-secondary">
+                      {meal.reviews}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="badge badge-accent">{meal.rating}</span>
+                  </td>
+                  <td>{meal.distributor}</td>
+                  <td>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Link to={`/adminDashboard/updateMeal/${meal._id}`}>
+                        <button className="btn btn-xs btn-warning">
+                          Update
+                        </button>
+                      </Link>
+                      <button
+                        className="btn btn-xs btn-error"
+                        onClick={() => handleDelete(meal._id)}
+                      >
+                        Delete
+                      </button>
+                      <Link to={`/adminDashboard/meal/${meal._id}`}>
+                        <button className="btn btn-xs btn-info">View</button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center text-gray-500 py-6">
+                  No meals found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-        {meals.length === 0 && (
-          <div className="text-center text-gray-500 py-6">No meals found.</div>
-        )}
       </div>
     </div>
   );
