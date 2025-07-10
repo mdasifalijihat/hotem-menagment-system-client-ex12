@@ -24,6 +24,7 @@ import MealDetails from "../pages/Dashboard/Admin/allMailsup/MealDetails";
 import UpdateMeal from "../pages/Dashboard/Admin/allMailsup/UpdateMeal";
 import Meals from "../pages/page/Meals/Meals";
 import UserMealDetails from "../pages/page/Meals/UserMealDetails";
+import MembershipSection from "../pages/page/MembershipSection/MembershipSection";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -35,7 +36,8 @@ export const router = createBrowserRouter([
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
       { path: "/meals", Component: Meals },
-      {path:'/meals/:id', element: <UserMealDetails/>}
+      {path:'/meals/:id', element: <UserMealDetails/>},
+      {path:'/membershipSection', element: <MembershipSection/>},
     ],
   },
   {
