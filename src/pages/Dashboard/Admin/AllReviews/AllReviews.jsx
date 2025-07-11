@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
+import useAxiosSecure from "../../../../api/useAxiosSecure";
 
 const AllReviews = () => {
-    return (
-        <div>
-            reviews 
-        </div>
-    );
+  const axiosSecure = useAxiosSecure();
+  return <div>reviews</div>;
 };
 
 export default AllReviews;

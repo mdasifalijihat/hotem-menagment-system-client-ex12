@@ -54,9 +54,20 @@ const Meals = () => {
               </figure>
               <div className="card-body">
                 <h2 className="card-title">{meal.title}</h2>
-                <p>Rating: {meal.rating || 0}</p>
-                <p>Price: ${meal.price.toFixed(2)}</p>
-                <div className="card-actions justify-end">
+
+                <div className="flex items-center justify-between text-sm mt-1">
+                  <p>
+                    ⭐ {meal.rating ? meal.rating.toFixed(1) : "N/A"} (
+                    {meal.reviews_count || 0} reviews)
+                    <span className="text-red-500 mt-2">Like: {meal.likes || 0}</span>
+                  </p>
+                </div>
+
+                <p className="mt-2 text-base text-gray-700 font-medium">
+                  Price: ${meal.price.toFixed(2)}
+                </p>
+
+                <div className="card-actions justify-end mt-3">
                   <button
                     onClick={() => navigate(`/meals/${meal._id}`)}
                     className="btn btn-primary btn-sm"
