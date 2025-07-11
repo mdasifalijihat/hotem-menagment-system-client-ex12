@@ -1,11 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../api/useAxiosSecure";
-
-const MembershipSection = () => {
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+ 
+ const MembershipSection = () => {
   const navigate = useNavigate();
 
   const packages = [
@@ -44,7 +40,9 @@ const MembershipSection = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-8">Choose a Membership</h2>
+      <h2 className="text-3xl font-bold text-center mb-8">
+        Choose a Membership
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {packages.map((pkg) => (
           <div
