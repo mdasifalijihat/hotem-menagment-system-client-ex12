@@ -25,6 +25,7 @@ import UpdateMeal from "../pages/Dashboard/Admin/allMailsup/UpdateMeal";
 import Meals from "../pages/page/Meals/Meals";
 import UserMealDetails from "../pages/page/Meals/UserMealDetails";
 import MembershipSection from "../pages/page/MembershipSection/MembershipSection";
+import CheckoutPage from "../pages/page/Checkout/Checkout";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
       { path: "/meals", Component: Meals },
       {path:'/meals/:id', element: <UserMealDetails/>},
       {path:'/membershipSection', element: <MembershipSection/>},
+      {path:"/checkout/:package_name", element:<CheckoutPage />}
     ],
   },
   {

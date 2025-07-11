@@ -3,13 +3,19 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router";
 import Swal from "sweetalert2";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { updateProfile } from "firebase/auth"; // ✅ ADD THIS
 import useAuth from "../../../hooks/useAuth";
 import SocailLogin from "./SocailLogin";
+import useAxiosSecure from "../../../api/useAxiosSecure";
+
+const image_hosting_key = import.meta.env.VITE_IMGBB_API_KEY;
+const image_upload_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -22,7 +28,41 @@ const Register = () => {
     const { name, email, password, photo } = data;
 
     try {
-      await createUser(email, password);
+      // 1. Upload Image to imgbb
+      let photoURL = "";
+      if (photo && photo[0]) {
+        const formData = new FormData();
+        formData.append("image", photo[0]);
+
+        const res = await fetch(image_upload_url, {
+          method: "POST",
+          body: formData,
+        });
+        const imgData = await res.json();
+        if (imgData.success) {
+          photoURL = imgData.data.display_url;
+        }
+      }
+
+      // 2. Create user with Firebase
+      const userCredential = await createUser(email, password);
+      
+      // 3. Update Firebase user profile
+      await updateProfile(userCredential.user, {
+        displayName: name,
+        photoURL: photoURL,
+      });
+
+      // 4. Save user info to MongoDB
+      const userInfo = {
+        name,
+        email,
+        photoURL,
+        status: "pending",
+      };
+
+      await axiosSecure.post("/users", userInfo);
+
       reset();
 
       Swal.fire({
