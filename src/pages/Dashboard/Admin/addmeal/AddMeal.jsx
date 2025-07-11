@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../api/useAxiosSecure";
 import axios from "axios";
+import useAxiosSecure from "../../../../api/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMGBB_API_KEY;
 const image_upload_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -13,7 +13,7 @@ const AddMeal = () => {
     handleSubmit,
     reset,
     formState: { errors },
-   } = useForm();
+  } = useForm();
   const onSubmit = async (data) => {
     const imageFile = { image: data.image[0] };
 
@@ -56,7 +56,7 @@ const AddMeal = () => {
             });
           }
         });
-      } 
+      }
     } catch (error) {
       console.error(error);
       Swal.fire("Oops!", "Something went wrong", "error");

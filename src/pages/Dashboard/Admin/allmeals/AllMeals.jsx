@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../api/useAxiosSecure";
+import useAxiosSecure from "../../../../api/useAxiosSecure";
+
 
 const AllMeals = () => {
   const axiosSecure = useAxiosSecure();

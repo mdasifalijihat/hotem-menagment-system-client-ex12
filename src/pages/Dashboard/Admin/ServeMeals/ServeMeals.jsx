@@ -4,7 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const ServeMeals = () => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient(); 
 
   // Fetch requested meals from server
   const { data: requests = [], isLoading } = useQuery({

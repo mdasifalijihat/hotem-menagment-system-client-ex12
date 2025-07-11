@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../api/useAxiosSecure";
 
+
 const UpdateMeal = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();

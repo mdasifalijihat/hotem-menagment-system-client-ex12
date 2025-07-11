@@ -74,6 +74,7 @@ const CheckoutPage = () => {
           transactionId: result.paymentIntent.id,
           date: new Date(),
           photoURL: user.photoURL,
+          status: 'panding'
         };
 
         const paymentRes = await axiosSecure.post("/payments", paymentData);

@@ -12,20 +12,20 @@ import RequestedMeals from "../pages/Dashboard/User/RequestedMeals";
 import MyReviews from "../pages/Dashboard/User/MyReviews";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
 import AdminDashboard from "../layout/AdminDashboard";
-import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
-import AddMeal from "../pages/Dashboard/Admin/AddMeal";
-import AllMeals from "../pages/Dashboard/Admin/AllMeals";
-import AllReviews from "../pages/Dashboard/Admin/AllReviews";
-import ServeMeals from "../pages/Dashboard/Admin/ServeMeals";
-import UpcomingMeal from "../pages/Dashboard/Admin/UpcomingMeal";
-import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal";
-import AdminInformation from "../pages/Dashboard/Admin/AdminInformation";
-import MealDetails from "../pages/Dashboard/Admin/allMailsup/MealDetails";
-import UpdateMeal from "../pages/Dashboard/Admin/allMailsup/UpdateMeal";
 import Meals from "../pages/page/Meals/Meals";
 import UserMealDetails from "../pages/page/Meals/UserMealDetails";
 import MembershipSection from "../pages/page/MembershipSection/MembershipSection";
 import Payment from "../pages/page/Checkout/Payment";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import AllMeals from "../pages/Dashboard/Admin/allmeals/AllMeals";
+import AddMeal from "../pages/Dashboard/Admin/addmeal/AddMeal";
+import MealDetails from "../pages/Dashboard/Admin/allmeals/MealDetails";
+import UpdateMeal from "../pages/Dashboard/Admin/allmeals/UpdateMeal";
+import AllReviews from "../pages/Dashboard/Admin/AllReviews/AllReviews";
+import ServeMeals from "../pages/Dashboard/Admin/ServeMeals/ServeMeals";
+import UpcomingMeal from "../pages/Dashboard/Admin/UpcomingMeal/UpcomingMeal";
+import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal/AddUpcomingMeal";
+import AdminInformation from "../pages/Dashboard/Admin/AdminInformation/AdminInformation";
 
 export const router = createBrowserRouter([
   {
@@ -40,10 +40,17 @@ export const router = createBrowserRouter([
       { path: "/meals", Component: Meals },
       { path: "/meals/:id", element: <UserMealDetails /> },
       { path: "/membershipSection", element: <MembershipSection /> },
-      { path: "/checkout/:packageName", element: <PrivateRoute><Payment /></PrivateRoute> },
+      {
+        path: "/checkout/:packageName",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
-  // user dashboard 
+  // user dashboard
   {
     path: "/dashboard",
     element: (
@@ -60,7 +67,7 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // admin dashboard 
+  // admin dashboard
   {
     path: "/adminDashboard",
     element: <AdminDashboard />,
