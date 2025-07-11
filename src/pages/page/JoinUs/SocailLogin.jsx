@@ -3,16 +3,30 @@ import { FcGoogle } from "react-icons/fc";
 import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../api/useAxiosSecure";
 
 const SocailLogin = () => {
   const { socialLogin } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const handleGoogleLogin = async () => {
     try {
+      const result = await socialLogin();
+      const user = result.user;
       await socialLogin();
+      // Step 1: Prepare user info
+      const userInfo = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        status: "pending",
+      };
+      // Step 2: Save to DB (optional: check if user already exists)
+      await axiosSecure.post("/users", userInfo);
+      // Step 3: Success message
       Swal.fire({
         icon: "success",
         title: "Logged in with Google!",

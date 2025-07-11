@@ -40,9 +40,10 @@ export const router = createBrowserRouter([
       { path: "/meals", Component: Meals },
       { path: "/meals/:id", element: <UserMealDetails /> },
       { path: "/membershipSection", element: <MembershipSection /> },
-      { path: "/checkout/:packageName", element: <Payment /> },
+      { path: "/checkout/:packageName", element: <PrivateRoute><Payment /></PrivateRoute> },
     ],
   },
+  // user dashboard 
   {
     path: "/dashboard",
     element: (
@@ -58,6 +59,8 @@ export const router = createBrowserRouter([
       { path: "paymentHistory", element: <PaymentHistory /> },
     ],
   },
+
+  // admin dashboard 
   {
     path: "/adminDashboard",
     element: <AdminDashboard />,

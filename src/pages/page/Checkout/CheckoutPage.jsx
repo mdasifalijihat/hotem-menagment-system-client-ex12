@@ -86,7 +86,7 @@ const CheckoutPage = () => {
             confirmButtonText: "OK",
           });
 
-          navigate("/dashboard/myMembership");
+          navigate("/dashboard/paymentHistory");
         }
       }
     } catch (err) {

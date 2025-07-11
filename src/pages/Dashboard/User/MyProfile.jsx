@@ -34,7 +34,7 @@ const MyProfile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { _id, ...userData } = userInfo; 
+      const { _id, ...userData } = userInfo;
       const res = await axiosSecure.patch(`/users/${user.email}`, userData);
       console.log("✅ Axios PATCH response:", res.data);
 
