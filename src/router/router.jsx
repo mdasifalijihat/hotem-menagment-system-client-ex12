@@ -27,6 +27,7 @@ import UpcomingMeal from "../pages/Dashboard/Admin/UpcomingMeal/UpcomingMeal";
 import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal/AddUpcomingMeal";
 import AdminInformation from "../pages/Dashboard/Admin/AdminInformation/AdminInformation";
 import UserMealDetails from "../pages/page/Meals/UserMealDetails";
+import UpcomingMeals from "../pages/page/UpcomingMeals/UpcomingMeals";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
       { path: "/register", Component: Register },
       { path: "/meals", Component: Meals },
       { path: "/meals/:id", element: <UserMealDetails /> },
+      { path: "/upcoming-meals", element: <UpcomingMeals /> },
       { path: "/membershipSection", element: <MembershipSection /> },
       {
         path: "/checkout/:packageName",
