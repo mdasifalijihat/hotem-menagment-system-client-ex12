@@ -13,7 +13,6 @@ import MyReviews from "../pages/Dashboard/User/MyReviews";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
 import AdminDashboard from "../layout/AdminDashboard";
 import Meals from "../pages/page/Meals/Meals";
-
 import MembershipSection from "../pages/page/MembershipSection/MembershipSection";
 import Payment from "../pages/page/Checkout/Payment";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
@@ -28,6 +27,9 @@ import AddUpcomingMeal from "../pages/Dashboard/Admin/AddUpcomingMeal/AddUpcomin
 import AdminInformation from "../pages/Dashboard/Admin/AdminInformation/AdminInformation";
 import UserMealDetails from "../pages/page/Meals/UserMealDetails";
 import UpcomingMeals from "../pages/page/UpcomingMeals/UpcomingMeals";
+import AdminAuthRoute from "./AdminAuthRoute ";
+import AdminLogin from "../context/Adminlogin/AdminLogin";
+import AdminSettings from "../context/Adminlogin/AdminSettings";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +45,7 @@ export const router = createBrowserRouter([
       { path: "/meals/:id", element: <UserMealDetails /> },
       { path: "/upcoming-meals", element: <UpcomingMeals /> },
       { path: "/membershipSection", element: <MembershipSection /> },
+      
       {
         path: "/checkout/:packageName",
         element: (
@@ -69,11 +72,21 @@ export const router = createBrowserRouter([
       { path: "paymentHistory", element: <PaymentHistory /> },
     ],
   },
+  //  admin login route
+  {
+    path: "/admin-login",
+    element: <AdminLogin />,
+  },
 
   // admin dashboard
   {
     path: "/adminDashboard",
-    element: <AdminDashboard />,
+    element: (
+      <AdminAuthRoute>
+        {" "}
+        <AdminDashboard />{" "}
+      </AdminAuthRoute>
+    ),
     children: [
       { path: "", element: <AdminInformation /> },
       { path: "manage-users", element: <ManageUsers /> },
@@ -91,6 +104,7 @@ export const router = createBrowserRouter([
       { path: "serve-meals", element: <ServeMeals /> },
       { path: "upcoming-meals", element: <UpcomingMeal /> },
       { path: "add-upcoming-meal", element: <AddUpcomingMeal /> },
+      { path: "admin-seting", element: <AdminSettings /> },
     ],
   },
 ]);

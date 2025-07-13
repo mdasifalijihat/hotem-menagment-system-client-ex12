@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import {
   FaSignOutAlt,
   FaUsers,
@@ -9,16 +9,14 @@ import {
   FaCalendarAlt,
   FaClipboardList,
   FaBars,
-  FaEnvelope
+  FaEnvelope,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAuth from "../hooks/useAuth";
 import { MdDashboard } from "react-icons/md";
 
 const AdminDashboard = () => {
-  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure you want to logout?",
@@ -28,11 +26,11 @@ const AdminDashboard = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        logout()
-          .then(() => {
-            Swal.fire("Logged Out", "You have been logged out.", "success");
-          })
-          .catch((err) => console.error(err));
+        if (result.isConfirmed) {
+          localStorage.removeItem("admin-token");
+          Swal.fire("Logged Out", "You have been logged out.", "success");
+          navigate("/admin-login");
+        }
       }
     });
   };
@@ -42,29 +40,68 @@ const AdminDashboard = () => {
 
   const menuItems = (
     <>
-      <Link to="/adminDashboard" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <MdDashboard className="inline mr-2" /> Admin Dashboard
       </Link>
-      <Link to="/adminDashboard/manage-users" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/manage-users"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaUsers className="inline mr-2" /> Manage Users
       </Link>
-      <Link to="/adminDashboard/add-meal" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/add-meal"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaPlus className="inline mr-2" /> Add New Meal
       </Link>
-      <Link to="/adminDashboard/all-meals" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/all-meals"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaUtensils className="inline mr-2" /> All Meals
       </Link>
-      <Link to="/adminDashboard/all-reviews" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/all-reviews"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaStar className="inline mr-2" /> All Reviews
       </Link>
-      <Link to="/adminDashboard/serve-meals" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/serve-meals"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaClipboardList className="inline mr-2" /> Serve Meals
       </Link>
-      <Link to="/adminDashboard/upcoming-meals" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/upcoming-meals"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaCalendarAlt className="inline mr-2" /> Upcoming Meals
       </Link>
-      <Link to="/adminDashboard/add-upcoming-meal" onClick={closeMobileMenu} className="block p-2 rounded hover:bg-gray-100">
+      <Link
+        to="/adminDashboard/add-upcoming-meal"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
         <FaPlus className="inline mr-2" /> Add Upcoming Meal
+      </Link>
+      <Link
+        to="/adminDashboard/admin-seting"
+        onClick={closeMobileMenu}
+        className="block p-2 rounded hover:bg-gray-100"
+      >
+        <FaPlus className="inline mr-2" /> Admin Seting
       </Link>
     </>
   );
@@ -95,13 +132,13 @@ const AdminDashboard = () => {
       <aside className="hidden lg:flex flex-col w-64 bg-white shadow-md p-4 min-h-screen sticky top-0">
         <div className="flex items-center gap-4 mb-6">
           <img
-            src={user?.photoURL || "https://i.ibb.co/fY34pzmL/download-13.jpg"}
+            src={"https://i.ibb.co/fY34pzmL/download-13.jpg"}
             alt="Admin"
             className="w-12 h-12 rounded-full border"
           />
           <div>
-            <h2 className="text-lg font-bold">{user?.displayName || "Admin"}</h2>
-            <p className="text-sm text-gray-500">{user?.email}</p>
+            <h2 className="text-lg font-bold">Admin</h2>
+            <p className="text-sm text-gray-500">Admin</p>
           </div>
         </div>
         <nav className="flex flex-col gap-2">{menuItems}</nav>
@@ -122,4 +159,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
