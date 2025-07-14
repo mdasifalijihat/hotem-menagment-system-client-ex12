@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useAxiosSecure from "../../api/useAxiosSecure";
-import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const AdminSettings = () => {

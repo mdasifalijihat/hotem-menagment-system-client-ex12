@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -8,25 +9,51 @@ const AdminLogin = () => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      return alert("Please enter email and password");
+      return Swal.fire({
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Please enter both email and password",
+      });
     }
 
     setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin-login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/admin-login`,
+        {
+          email,
+          password,
+        }
+      );
 
       if (res.data.token) {
         localStorage.setItem("admin-token", res.data.token);
-        window.location.href = "/adminDashboard";
+
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "Redirecting to dashboard...",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/adminDashboard";
+        }, 1500);
       } else {
-        alert("Login failed");
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: "Invalid credentials",
+        });
       }
     } catch (err) {
       console.error("Login Error:", err.response?.data || err.message);
-      alert(err.response?.data?.error || "Login failed");
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: err.response?.data || "Something went wrong",
+      });
     } finally {
       setLoading(false);
     }

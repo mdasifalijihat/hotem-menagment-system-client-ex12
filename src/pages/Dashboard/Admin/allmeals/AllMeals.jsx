@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../api/useAxiosSecure";
-
 
 const AllMeals = () => {
   const axiosSecure = useAxiosSecure();
-  const [meals, setMeals] = useState([]);
   const [sortBy, setSortBy] = useState("");
 
-  const fetchMeals = async () => {
-    try {
+  // ✅ Fetch meals using react-query
+  const {
+    data: meals = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["allMeals", sortBy],
+    queryFn: async () => {
       const url = sortBy ? `/allMeals?sortBy=${sortBy}` : `/allMeals`;
       const res = await axiosSecure.get(url);
-      setMeals(res.data);
-    } catch (error) {
-      console.error("Error fetching meals:", error);
-      Swal.fire("Error", "Could not fetch meals", "error");
-    }
-  };
-
-  useEffect(() => {
-    fetchMeals();
-  }, [sortBy]);
+      return res.data;
+    },
+  });
 
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
@@ -37,13 +35,21 @@ const AllMeals = () => {
       try {
         await axiosSecure.delete(`/meals/${id}`);
         Swal.fire("Deleted!", "Meal has been deleted.", "success");
-        fetchMeals();
+        refetch(); // ✅ Refresh data
       } catch (error) {
         console.error(error);
         Swal.fire("Error", "Failed to delete meal", "error");
       }
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -101,11 +107,13 @@ const AllMeals = () => {
                   </td>
                   <td>
                     <span className="badge badge-secondary">
-                      {meal.reviews}
+                      {meal.reviews || meal.reviews_count || 0}
                     </span>
                   </td>
                   <td>
-                    <span className="badge badge-accent">{meal.rating}</span>
+                    <span className="badge badge-accent">
+                      {meal.rating?.toFixed(1) || "0.0"}
+                    </span>
                   </td>
                   <td>{meal.distributor}</td>
                   <td>

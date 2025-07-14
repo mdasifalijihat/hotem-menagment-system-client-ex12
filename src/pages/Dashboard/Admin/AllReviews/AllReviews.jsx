@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../../../../api/useAxiosSecure";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../api/useAxiosSecure";
 
 const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
-  const [meals, setMeals] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [reviews, setReviews] = useState([]);
 
-  useEffect(() => {
-    axiosSecure
-      .get("/allMeals")
-      .then((res) => setMeals(res.data))
-      .catch((err) => console.error("Failed to load meals:", err))
-      .finally(() => setLoading(false));
-  }, [axiosSecure]);
+  // ✅ Fetch all meals with useQuery
+  const {
+    data: meals = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["allMeals"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allMeals");
+      return res.data;
+    },
+  });
 
+  // ✅ Delete meal handler
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -31,8 +36,8 @@ const AllReviews = () => {
     if (confirm.isConfirmed) {
       try {
         await axiosSecure.delete(`/meals/${id}`);
-        setMeals((prev) => prev.filter((meal) => meal._id !== id));
         Swal.fire("Deleted!", "Meal has been deleted.", "success");
+        refetch(); // ✅ Refresh meal list
       } catch (error) {
         console.error("Delete failed:", error);
         Swal.fire("Error", "Failed to delete meal", "error");
@@ -40,6 +45,7 @@ const AllReviews = () => {
     }
   };
 
+  // ✅ View reviews modal
   const handleViewReviews = async (meal) => {
     try {
       const res = await axiosSecure.get(`/meals/${meal._id}/reviews`);
@@ -52,7 +58,14 @@ const AllReviews = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  // ✅ Loading spinner
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">

@@ -1,18 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaThumbsUp } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../api/useAxiosSecure";
 
 const UpcomingMeal = () => {
   const axiosSecure = useAxiosSecure();
-  const [meals, setMeals] = useState([]);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    axiosSecure.get("/upcoming-meals").then((res) => {
-      setMeals(res.data);
-    });
-  }, [axiosSecure]);
+  // ✅ Fetch upcoming meals
+  const {
+    data: meals = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["upcomingMeals"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/upcoming-meals");
+      return res.data;
+    },
+  });
 
+  // ✅ Publish meal mutation
+  const publishMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await axiosSecure.patch(`/upcoming-meals/${id}/publish`);
+      return res.data;
+    },
+    onSuccess: () => {
+      Swal.fire("Published!", "Meal is now live.", "success");
+      queryClient.invalidateQueries(["upcomingMeals"]);
+    },
+    onError: () => {
+      Swal.fire("Error", "Something went wrong.", "error");
+    },
+  });
+
+  // ✅ Confirm and publish
   const handlePublish = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -23,18 +48,26 @@ const UpcomingMeal = () => {
     });
 
     if (confirm.isConfirmed) {
-      try {
-        const res = await axiosSecure.patch(`/upcoming-meals/${id}/publish`);
-        if (res.data.success) {
-          Swal.fire("Published!", "Meal is now live.", "success");
-          setMeals((prev) => prev.filter((meal) => meal._id !== id));
-        }
-      } catch (error) {
-        console.error(error);
-        Swal.fire("Error", "Something went wrong.", "error");
-      }
+      publishMutation.mutate(id);
     }
   };
+
+  // ✅ Handle loading and error states
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-500"></div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500 mt-10">
+        Failed to load meals: {error.message}
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -61,8 +94,9 @@ const UpcomingMeal = () => {
               <button
                 onClick={() => handlePublish(meal._id)}
                 className="btn btn-sm btn-success text-white"
+                disabled={publishMutation.isLoading}
               >
-                Publish
+                {publishMutation.isLoading ? "Publishing..." : "Publish"}
               </button>
             </div>
           </div>

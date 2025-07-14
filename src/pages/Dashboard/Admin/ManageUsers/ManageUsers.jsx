@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { FaSearch } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../api/useAxiosSecure";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
 
-  const fetchUsers = async () => {
-    try {
+  // ✅ useQuery to fetch subscribed users
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["subscribedUsers", query],
+    queryFn: async () => {
       const res = await axiosSecure.get(`/subscribed-users?search=${query}`);
-      setUsers(res.data);
-    } catch (err) {
-      console.error("Error fetching subscribed users", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, [query]);
+      return res.data;
+    },
+  });
 
   const handleSearch = () => {
-    setQuery(search);
+    setQuery(search.trim());
   };
 
-  const handleMakeAdmin = async (email, axiosSecure, fetchUsers) => {
+  const handleMakeAdmin = async (email) => {
     try {
       const res = await axiosSecure.patch(`/users/${email}`, {
         role: "admin",
@@ -41,7 +40,7 @@ const ManageUsers = () => {
           icon: "success",
           confirmButtonText: "OK",
         });
-        fetchUsers();
+        refetch(); // ✅ refetch users after update
       } else {
         Swal.fire({
           title: "No Changes",
@@ -61,7 +60,7 @@ const ManageUsers = () => {
     }
   };
 
-  const confirmMakeAdmin = (email, axiosSecure, fetchUsers) => {
+  const confirmMakeAdmin = (email) => {
     Swal.fire({
       title: "Are you sure?",
       text: `Do you want to make ${email} an admin?`,
@@ -72,10 +71,19 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, make admin!",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleMakeAdmin(email, axiosSecure, fetchUsers);
+        handleMakeAdmin(email);
       }
     });
   };
+
+  // ✅ Show loading spinner while fetching users
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
@@ -103,7 +111,7 @@ const ManageUsers = () => {
               <th>#</th>
               <th>Username</th>
               <th>Email</th>
-              <th>Package Name</th>
+              <th>Package</th>
               <th>Subscription</th>
               <th>Role</th>
               <th>Action</th>
@@ -115,7 +123,7 @@ const ManageUsers = () => {
                 <td>{index + 1}</td>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
-                <td>{u.package}</td>
+                <td>{u.package || "—"}</td>
                 <td>
                   <span
                     className={`badge ${
@@ -132,9 +140,7 @@ const ManageUsers = () => {
                   ) : (
                     <button
                       className="btn btn-sm btn-warning"
-                      onClick={() =>
-                        confirmMakeAdmin(u.email, axiosSecure, fetchUsers)
-                      }
+                      onClick={() => confirmMakeAdmin(u.email)}
                     >
                       Make Admin
                     </button>
