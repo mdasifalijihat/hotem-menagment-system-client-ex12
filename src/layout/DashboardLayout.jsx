@@ -98,7 +98,7 @@ const DashboardLayout = () => {
             onClick={handleLogout}
             className="flex items-center gap-3 p-2 rounded hover:bg-base-300"
           >
-            <FaSignOutAlt /> Logout
+            <FaSignOutAlt className="text-red-500" /> Logout
           </button>
         </nav>
       </aside>

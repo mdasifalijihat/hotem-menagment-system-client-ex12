@@ -50,9 +50,14 @@ const MyProfile = () => {
     }
   };
 
-  if (loading) {
-    return <p className="text-center mt-10">Loading profile...</p>;
+   if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
   }
+
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 border rounded-md shadow-md bg-white">

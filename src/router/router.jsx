@@ -30,6 +30,7 @@ import AdminAuthRoute from "./AdminAuthRoute ";
 import AdminLogin from "../context/Adminlogin/AdminLogin";
 import AdminSettings from "../context/Adminlogin/AdminSettings";
 import Home from "../pages/page/Home/home/Home";
+import DashboardUser from "../pages/Dashboard/User/DashboardUser";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      { path: "/dashboard", element: <DashboardUser /> },
       { path: "profile", element: <MyProfile /> },
       { path: "requestedMeals", element: <RequestedMeals /> },
       { path: "myReviews", element: <MyReviews /> },

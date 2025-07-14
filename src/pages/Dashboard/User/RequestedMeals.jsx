@@ -12,11 +12,17 @@ const RequestedMeals = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/requested-meals?email=${user.email}`);
-      return res.data.data; // ✅ access .data from response
+      return res.data.data; 
     },
   });
 
-  if (isLoading) return <p className="text-center my-6">Loading...</p>;
+   if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

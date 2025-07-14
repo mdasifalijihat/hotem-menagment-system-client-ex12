@@ -11,7 +11,7 @@ const ServeMeals = () => {
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ["mealRequests"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/requested-meals");
+      const res = await axiosSecure.get("/requested-meals-admin");
       return res.data.data; // ✅ Correctly return the array
     },
   });

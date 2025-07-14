@@ -12,7 +12,8 @@ const MyReviews = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    axiosSecure.get(`/my-reviews?email=${user.email}`)
+    axiosSecure
+      .get(`/my-reviews?email=${user.email}`)
       .then((res) => {
         setReviews(res.data);
       })
@@ -30,9 +31,10 @@ const MyReviews = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/reviews/${id}`)
+        axiosSecure
+          .delete(`/reviews/${id}`)
           .then(() => {
-            setReviews(reviews.filter(r => r._id !== id));
+            setReviews(reviews.filter((r) => r._id !== id));
             Swal.fire("Deleted!", "Your review has been removed.", "success");
           })
           .catch(() => {
@@ -41,15 +43,22 @@ const MyReviews = () => {
       }
     });
   };
-
-  if (loading) return <p className="text-center my-6">Loading...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">My Reviews</h2>
 
       {reviews.length === 0 ? (
-        <p className="text-gray-500 text-center">You haven’t reviewed any meals yet.</p>
+        <p className="text-gray-500 text-center">
+          You haven’t reviewed any meals yet.
+        </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="table table-zebra w-full">
@@ -102,10 +111,19 @@ const MyReviews = () => {
             >
               &times;
             </button>
-            <h3 className="text-xl font-bold mb-2">{selectedReview.mealTitle}</h3>
-            <p><strong>Rating:</strong> {selectedReview.rating}</p>
-            <p><strong>Likes:</strong> {selectedReview.likes || 0}</p>
-            <p className="mt-3 text-gray-700"><strong>Comment:</strong><br /> {selectedReview.comment}</p>
+            <h3 className="text-xl font-bold mb-2">
+              {selectedReview.mealTitle}
+            </h3>
+            <p>
+              <strong>Rating:</strong> {selectedReview.rating}
+            </p>
+            <p>
+              <strong>Likes:</strong> {selectedReview.likes || 0}
+            </p>
+            <p className="mt-3 text-gray-700">
+              <strong>Comment:</strong>
+              <br /> {selectedReview.comment}
+            </p>
           </div>
         </div>
       )}

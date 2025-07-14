@@ -1,12 +1,50 @@
-# React + Vite
+# 🍽️ Hotel Meal Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-stack hotel meal management platform built using the **MERN Stack**. Designed for efficient meal distribution, subscription-based premium access, admin control, and smooth user experience with integrated payment solutions.
 
-Currently, two official plugins are available:
+🌐 **Live Preview:** `http://localhost:5173`  
+🔐 **Admin Login:**  
+• **Email:** `admin@gmail.com`  
+• **Password:** `123456`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features Overview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔹 User Panel
+- 🔍 Browse categorized meals (Breakfast, Lunch, Dinner, All)
+- 📝 View detailed meal descriptions
+- 📩 Request meals & track delivery status
+- ⭐ Add ratings and reviews
+- 💳 Upgrade to premium (Silver, Gold, Platinum) via Stripe
+- 📁 View requested meals, reviews & payment history
+
+### 🔸 Admin Dashboard
+- 📊 Dashboard summary with total users & meals
+- 👥 Manage all users (with role & subscription status)
+- ➕ Add new meals (with image upload via ImageBB)
+- 📃 View and sort all meals
+- 💬 Manage all reviews
+- ✅ Serve pending meal requests
+- 📅 Add & manage upcoming meals
+- 🔐 Secure logout and responsive admin header
+
+---
+
+## 🛠️ Tech Stack
+
+| Tech                | Usage                         |
+|---------------------|-------------------------------|
+| React + Vite        | Frontend Framework            |
+| Tailwind + DaisyUI  | Responsive UI Styling         |
+| React Router DOM    | SPA Routing                   |
+| React Hook Form     | Form Handling                 |
+| React Query         | Data Fetching & Caching       |
+| Firebase Auth       | Authentication                |
+| MongoDB + Express   | Backend API & Database        |
+| Stripe              | Secure Payment Integration    |
+| ImageBB             | Image Upload & Hosting        |
+
+---
+
+
