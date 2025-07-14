@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layout/MainLayout";
 import ErrorPage from "../pages/Error/ErrorPage";
-import Home from "../pages/page/Home/Home";
 import Login from "../pages/page/JoinUs/Login";
 import JoinUs from "../pages/page/JoinUs/JoinUs";
 import Register from "../pages/page/JoinUs/Register";
@@ -30,6 +29,7 @@ import UpcomingMeals from "../pages/page/UpcomingMeals/UpcomingMeals";
 import AdminAuthRoute from "./AdminAuthRoute ";
 import AdminLogin from "../context/Adminlogin/AdminLogin";
 import AdminSettings from "../context/Adminlogin/AdminSettings";
+import Home from "../pages/page/Home/home/Home";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       { path: "/meals/:id", element: <UserMealDetails /> },
       { path: "/upcoming-meals", element: <UpcomingMeals /> },
       { path: "/membershipSection", element: <MembershipSection /> },
-      
+
       {
         path: "/checkout/:packageName",
         element: (
