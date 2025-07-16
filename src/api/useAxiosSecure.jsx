@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "https://hostel-management-server-zeta.vercel.app/",
+  baseURL: "http://localhost:3000/",
 });
 
 // Automatically attach admin token to secure requests

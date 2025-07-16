@@ -30,45 +30,62 @@ const AdminInformation = () => {
     const fetchStats = async () => {
       setLoading(true);
       setError(null);
+      
       try {
-        // Using a single endpoint would be better, but we'll handle multiple
-        const endpoints = [
-          "/meals/count",
-          "/users/count",
-          "/payments/count",
-          "/reviews/count",
-          "/upcoming-meals/count",
-          "/meal-requests/count",
-        ];
-
-        const responses = await Promise.allSettled(
-          endpoints.map(endpoint => axiosSecure.get(endpoint))
-        );
-
-        const statsData = responses.map(res => 
-          res.status === "fulfilled" ? res.value.data : { count: 0 }
-        );
-
-        setStats({
-          meals: statsData[0].count || 0,
-          users: statsData[1].count || 0,
-          payments: statsData[2].count || 0,
-          reviews: statsData[3].count || 0,
-          upcomingMeals: statsData[4].count || 0,
-          mealRequests: statsData[5].count || 0,
-        });
-      } catch (error) {
-        console.error("Failed to load stats:", error);
-        setError("Failed to load dashboard data. Please try again later.");
-        // Set default values
-        setStats({
+        // Create an object to hold all stats
+        const statsData = {
           meals: 0,
           users: 0,
           payments: 0,
           reviews: 0,
           upcomingMeals: 0,
           mealRequests: 0,
+        };
+
+        // Array of all stat fetches with their keys
+        const statFetches = [
+          { key: 'meals', endpoint: '/meals/count' },
+          { key: 'users', endpoint: '/users/count' },
+          { key: 'payments', endpoint: '/payments/count' },
+          { key: 'reviews', endpoint: '/reviews/count' },
+          { key: 'upcomingMeals', endpoint: '/upcoming-meals/count' },
+          { key: 'mealRequests', endpoint: '/meal-requests/count' },
+        ];
+
+        // Execute all fetches with individual error handling
+        const results = await Promise.allSettled(
+          statFetches.map(({ key, endpoint }) => 
+            axiosSecure.get(endpoint)
+              .then(res => ({ key, data: res.data }))
+              .catch(err => {
+                console.error(`Failed to fetch ${key}:`, err);
+                return { key, data: { count: 0 } }; // Default value on error
+              })
+          )
+        );
+
+        // Process results
+        results.forEach(result => {
+          if (result.status === 'fulfilled') {
+            const { key, data } = result.value;
+            statsData[key] = data?.count || 0;
+          }
         });
+
+        setStats(statsData);
+
+        // Check for any completely failed requests
+        const failedRequests = results.filter(r => 
+          r.status === 'rejected' || !r.value?.data?.count
+        );
+        
+        if (failedRequests.length > 0) {
+          setError("Some data couldn't be loaded. Showing partial results.");
+        }
+
+      } catch (mainError) {
+        console.error("Failed to load stats:", mainError);
+        setError("Failed to load dashboard data. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -130,7 +147,7 @@ const AdminInformation = () => {
   );
 };
 
-// Reusable Stat Card Component
+// Stat Card Component
 const StatCard = ({ icon, color, title, value }) => {
   const colorClasses = {
     green: "bg-green-500",
@@ -154,7 +171,7 @@ const StatCard = ({ icon, color, title, value }) => {
   );
 };
 
-// Reusable Social Card Component
+// Social Card Component
 const SocialCard = ({ color, icon, title, count, sub }) => (
   <div className={`card ${color} text-white shadow-md hover:shadow-lg transition-shadow`}>
     <div className="card-body items-center p-6">

@@ -4,6 +4,7 @@ A modern, full-stack hotel meal management platform built using the **MERN Stack
 
 🌐 **Live Preview:** `https://hotel-management-system-bd.netlify.app/`  
 🔐 **Admin Login:**  
+🌐 **Admin Live Preview:** `https://hotel-management-system-bd.netlify.app/adminDashboard`
 • **Email:** `admin@gmail.com`  
 • **Password:** `123456`
 

@@ -1,11 +1,14 @@
 import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../api/useAxiosSecure";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -17,14 +20,14 @@ const AdminLogin = () => {
     }
 
     setLoading(true);
+
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/admin-login`,
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axiosSecure.post("/admin-login", {
+        email,
+        password,
+      });
+
+      console.log(res.data);
 
       if (res.data.token) {
         localStorage.setItem("admin-token", res.data.token);
@@ -38,7 +41,7 @@ const AdminLogin = () => {
         });
 
         setTimeout(() => {
-          window.location.href = "/adminDashboard";
+          navigate("/adminDashboard"); // better than window.location.href
         }, 1500);
       } else {
         Swal.fire({
@@ -52,7 +55,7 @@ const AdminLogin = () => {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: err.response?.data || "Something went wrong",
+        text: err.response?.data?.message || "Something went wrong",
       });
     } finally {
       setLoading(false);
