@@ -7,9 +7,9 @@ import useAxiosSecure from "../../../api/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 
 const packages = {
-  Silver: 9.99,
-  Gold: 19.99,
-  Platinum: 29.99,
+  Basic: 9.99,
+  Standard: 19.99,
+  Premium: 29.99,
 };
 
 const CheckoutPage = () => {

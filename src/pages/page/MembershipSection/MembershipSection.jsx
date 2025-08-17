@@ -1,35 +1,48 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
- 
- const MembershipSection = () => {
+import { FaCheck, FaTimes } from "react-icons/fa";
+
+const MembershipSection = () => {
   const navigate = useNavigate();
 
   const packages = [
     {
-      name: "Silver",
+      name: "Basic",
       price: 9.99,
-      color: "bg-slate-100",
-      benefits: ["Basic Meal Access", "Support via Email", "Standard Speed"],
-    },
-    {
-      name: "Gold",
-      price: 19.99,
-      color: "bg-yellow-100",
-      benefits: [
-        "Priority Meal Access",
-        "Chat & Email Support",
-        "Fast Processing",
+      color: "bg-blue-500",
+      btnColor: "bg-blue-500 hover:bg-blue-600",
+      features: [
+        { text: "Basic Meal Access", included: true },
+        { text: "Email Support", included: true },
+        { text: "Limited Offers", included: false },
+        { text: "Priority Meals", included: false },
+        { text: "24/7 Support", included: false },
       ],
     },
     {
-      name: "Platinum",
+      name: "Standard",
+      price: 19.99,
+      color: "bg-orange-500",
+      btnColor: "bg-orange-500 hover:bg-orange-600",
+      features: [
+        { text: "Priority Meal Access", included: true },
+        { text: "Email & Chat Support", included: true },
+        { text: "Exclusive Offers", included: true },
+        { text: "Fast Processing", included: false },
+        { text: "24/7 Support", included: false },
+      ],
+    },
+    {
+      name: "Premium",
       price: 29.99,
-      color: "bg-purple-100",
-      benefits: [
-        "All Meals Access",
-        "24/7 Support",
-        "Fastest Processing",
-        "Exclusive Offers",
+      color: "bg-red-500",
+      btnColor: "bg-red-500 hover:bg-red-600",
+      features: [
+        { text: "All Meal Access", included: true },
+        { text: "24/7 Support", included: true },
+        { text: "Exclusive Offers", included: true },
+        { text: "Fastest Processing", included: true },
+        { text: "Premium Benefits", included: true },
       ],
     },
   ];
@@ -39,28 +52,54 @@ import { useNavigate } from "react-router-dom";
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-8">
-        Choose a Membership
+    <div className="container mx-auto py-16 px-4">
+      <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+        Choose Your Membership
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {packages.map((pkg) => (
           <div
             key={pkg.name}
-            className={`card ${pkg.color} shadow-xl transition hover:scale-105 cursor-pointer`}
+            className="bg-white shadow-xl rounded-xl overflow-hidden transform hover:scale-105 transition duration-300"
             onClick={() => handleSelect(pkg.name)}
           >
-            <div className="card-body text-center">
-              <h3 className="text-2xl font-bold">{pkg.name} Package</h3>
-              <p className="text-xl text-gray-700 font-semibold mb-4">
-                ${pkg.price} / month
+            {/* Header */}
+            <div className={`${pkg.color} text-white text-center py-6`}>
+              <h3 className="text-2xl font-bold">{pkg.name}</h3>
+            </div>
+
+            {/* Price */}
+            <div className="text-center py-6">
+              <p className="text-4xl font-extrabold text-gray-800">
+                ${pkg.price}
               </p>
-              <ul className="text-sm text-left mb-4 space-y-2">
-                {pkg.benefits.map((b, idx) => (
-                  <li key={idx}>✅ {b}</li>
-                ))}
-              </ul>
-              <button className="btn btn-primary w-full">Upgrade Now</button>
+              <span className="text-gray-500">/month</span>
+            </div>
+
+            {/* Features */}
+            <ul className="px-8 space-y-3">
+              {pkg.features.map((feature, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-center gap-2 text-gray-700"
+                >
+                  {feature.included ? (
+                    <FaCheck className="text-green-500" />
+                  ) : (
+                    <FaTimes className="text-red-500" />
+                  )}
+                  <span>{feature.text}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Button */}
+            <div className="px-8 py-6">
+              <button                
+                className={`w-full py-3 text-white font-semibold rounded-lg transition ${pkg.btnColor}`}
+              >
+                Upgrade Now
+              </button>
             </div>
           </div>
         ))}
@@ -70,3 +109,4 @@ import { useNavigate } from "react-router-dom";
 };
 
 export default MembershipSection;
+

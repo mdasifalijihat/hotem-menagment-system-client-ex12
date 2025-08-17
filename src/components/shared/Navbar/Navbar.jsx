@@ -85,7 +85,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-white shadow-md sticky top-0 z-50 ">
+    <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 shadow sticky top-0 z-50 ">
       <div className="navbar container mx-auto  px-4 ">
         {/* Navbar Start */}
         <div className="navbar-start">

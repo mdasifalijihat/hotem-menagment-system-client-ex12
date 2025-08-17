@@ -41,10 +41,10 @@ const Meals = () => {
       : mealsArray;
 
     return (
-      <div>
+      <div className="container mx-auto py-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {displayMeals.map((meal) => (
-            <div key={meal._id} className="card bg-base-100 shadow-xl">
+            <div key={meal._id} className="card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105 transition transform duration-300">
               <figure>
                 <img
                   src={meal.image}
