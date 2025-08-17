@@ -1,6 +1,10 @@
 import React from "react";
-import { Link } from "react-router";
-import { FaFacebook, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom"; // react-router-dom import
+import { 
+  FaFacebook, FaTwitter, FaInstagram, FaGithub, 
+  FaHome, FaUtensils, FaCalendarAlt, FaUserPlus, 
+  FaLifeRing, FaPhone, FaQuestionCircle, FaFileContract, FaShieldAlt, FaCookieBite 
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -36,17 +40,17 @@ const Footer = () => {
         <nav>
           <h6 className="text-lg font-semibold text-gray-800 mb-4">Quick Links</h6>
           <ul className="space-y-2">
-            <li>
-              <Link to="/" className="text-gray-600 hover:text-blue-500 transition">Home</Link>
+            <li className="flex items-center gap-2">
+              <FaHome /> <Link to="/" className="text-gray-600 hover:text-blue-500 transition">Home</Link>
             </li>
-            <li>
-              <Link to="/meals" className="text-gray-600 hover:text-blue-500 transition">Meals</Link>
+            <li className="flex items-center gap-2">
+              <FaUtensils /> <Link to="/meals" className="text-gray-600 hover:text-blue-500 transition">Meals</Link>
             </li>
-            <li>
-              <Link to="/upcoming-meals" className="text-gray-600 hover:text-blue-500 transition">Upcoming Meals</Link>
+            <li className="flex items-center gap-2">
+              <FaCalendarAlt /> <Link to="/upcoming-meals" className="text-gray-600 hover:text-blue-500 transition">Upcoming Meals</Link>
             </li>
-            <li>
-              <Link to="/join-us" className="text-gray-600 hover:text-blue-500 transition">Join Us</Link>
+            <li className="flex items-center gap-2">
+              <FaUserPlus /> <Link to="/join-us" className="text-gray-600 hover:text-blue-500 transition">Join Us</Link>
             </li>
           </ul>
         </nav>
@@ -55,14 +59,14 @@ const Footer = () => {
         <nav>
           <h6 className="text-lg font-semibold text-gray-800 mb-4">Support</h6>
           <ul className="space-y-2">
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">Help Center</a>
+            <li className="flex items-center gap-2">
+              <FaLifeRing /> <Link to="/help" className="text-gray-600 hover:text-blue-500 transition">Help Center</Link>
             </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">Contact Us</a>
+            <li className="flex items-center gap-2">
+              <FaPhone /> <Link to="/contact-us" className="text-gray-600 hover:text-blue-500 transition">Contact Us</Link>
             </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">FAQs</a>
+            <li className="flex items-center gap-2">
+              <FaQuestionCircle /> <Link to="/faq" className="text-gray-600 hover:text-blue-500 transition">FAQs</Link>
             </li>
           </ul>
         </nav>
@@ -71,14 +75,14 @@ const Footer = () => {
         <nav>
           <h6 className="text-lg font-semibold text-gray-800 mb-4">Legal</h6>
           <ul className="space-y-2">
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">Terms of Use</a>
+            <li className="flex items-center gap-2">
+              <FaFileContract /> <Link to="/terms-of-use" className="text-gray-600 hover:text-blue-500 transition">Terms of Use</Link>
             </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">Privacy Policy</a>
+            <li className="flex items-center gap-2">
+              <FaShieldAlt /> <Link to="/privacy-policy" className="text-gray-600 hover:text-blue-500 transition">Privacy Policy</Link>
             </li>
-            <li>
-              <a href="#" className="text-gray-600 hover:text-blue-500 transition">Cookie Policy</a>
+            <li className="flex items-center gap-2">
+              <FaCookieBite /> <Link to="/cookie-policy" className="text-gray-600 hover:text-blue-500 transition">Cookie Policy</Link>
             </li>
           </ul>
         </nav>

@@ -34,6 +34,11 @@ import DashboardUser from "../pages/Dashboard/User/DashboardUser";
 import AboutPage from "../components/info/AboutPage";
 import HelpSupportPage from "../components/info/HelpSupportPage";
 import AnnouncementsPage from "../components/info/AnnouncementsPage";
+import ContactUsPage from "../components/info/ContactUsPage";
+import FAQPage from "../components/info/FAQPage";
+import TermsOfUsePage from "../components/legal/TermsOfUsePage";
+import PrivacyPolicyPage from "../components/legal/PrivacyPolicyPage";
+import CookiePolicyPage from "../components/legal/CookiePolicyPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +57,11 @@ export const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/help", element: <HelpSupportPage /> },
       { path: "/announcements", element: <AnnouncementsPage /> },
+      { path: "/contact-us", element: <ContactUsPage /> },
+      { path: "/faq", element: <FAQPage /> },
+      { path: "/terms-of-use", element: <TermsOfUsePage /> },
+      { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
+      { path: "/cookie-policy", element: <CookiePolicyPage /> },
 
       {
         path: "/checkout/:packageName",
