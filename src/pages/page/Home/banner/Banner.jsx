@@ -46,7 +46,7 @@ const Banner = () => {
   }
 
   return (
-    <div className="relative h-[80vh] w-full">
+    <div className="relative h-[60vh] w-full">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -88,7 +88,7 @@ const Banner = () => {
           <SwiperSlide>
             <div className="w-full h-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
               <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-              <div className="relative z-10 text-center text-white px-5 max-w-4xl">
+              <div className="relative z-10 text-center text-white text-shadow-2x px-5 max-w-4xl">
                 <h1 className="text-4xl md:text-5xl font-bold mb-1 drop-shadow-lg">
                   Delicious Meals Await You
                 </h1>
@@ -103,7 +103,7 @@ const Banner = () => {
       </Swiper>
 
       {/* Search form remains the same */}
-      <div className="absolute bottom-50 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4 z-20">
+      <div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4 z-20">
         <form onSubmit={handleSearch} className="join w-full">
           <input
             type="text"

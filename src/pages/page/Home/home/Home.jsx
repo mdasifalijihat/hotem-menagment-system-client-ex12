@@ -38,10 +38,25 @@ const Home = () => {
       feedback: "I love the variety of meals. The admin is very helpful.",
       avatar: "https://randomuser.me/api/portraits/women/2.jpg",
     },
+    {
+      id: 3,
+      name: "Kamal",
+      feedback: "Great place to find healthy and tasty meals.",
+      avatar: "https://randomuser.me/api/portraits"      
+    },
+      {
+    id: 3,
+    name: "Tanvir",
+    role: "Teacher",
+    feedback: "Healthy meals, quick service, and great quality overall!",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    rating: 5,
+  },
+
   ];
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-4">
       <Banner />
       <PopularMealsCarousel />
 

@@ -1,4 +1,3 @@
-
 import { Link, NavLink, useNavigate } from "react-router";
 import { FaBell, FaBars } from "react-icons/fa";
 import { useState, useEffect } from "react";
@@ -13,20 +12,19 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user?.email) return;
+
     axiosSecure
-      .get(`/notifications?email=${user?.email}`)
+      .get(`/notifications?email=${user.email}`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setNotifications(res.data);
-        } else {
-          setNotifications([]);
         }
       })
       .catch((err) => {
-        console.error(err);
-        setNotifications([]);
+        console.error("Notification fetch error:", err);
       });
-  }, [user, axiosSecure]);
+  }, [user?.email, axiosSecure]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -132,16 +130,21 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-72 max-h-80 overflow-y-auto z-50"
               >
                 {notifications?.length > 0 ? (
-                  notifications.map((noti) => (
-                    <li key={noti._id}>
-                      <Link
-                        to={noti.link}
-                        className="hover:bg-gray-100 py-2 px-3 rounded-md block"
-                      >
-                        {noti.message}
-                      </Link>
-                    </li>
-                  ))
+                  notifications.map(
+                    (noti) => (
+                      console.log(noti),
+                      (
+                        <li key={noti._id}>
+                          <Link
+                            to={noti.link}
+                            className="hover:bg-gray-100 py-2 px-3 rounded-md block"
+                          >
+                            {noti.message}
+                          </Link>
+                        </li>
+                      )
+                    )
+                  )
                 ) : (
                   <li className="text-gray-500 text-center py-2">
                     No notifications

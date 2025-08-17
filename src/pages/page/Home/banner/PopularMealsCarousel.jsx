@@ -35,7 +35,7 @@ const PopularMealsCarousel = () => {
     );
 
   return (
-    <section className="my-10 px-4 md:px-10 py-8">
+    <section className="my-10 px-4 md:px-10 py-4">
       <h2 className="text-3xl font-bold text-center mb-6">
         🍽️ Popular Meals
       </h2>
@@ -55,7 +55,7 @@ const PopularMealsCarousel = () => {
       >
         {data.map((meal) => (
           <SwiperSlide key={meal._id}>
-            <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-[1.02] mb-8">
               <img
                 src={meal.image}
                 alt={meal.title}
