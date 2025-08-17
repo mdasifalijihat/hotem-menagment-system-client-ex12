@@ -10,9 +10,13 @@ import useAxiosSecure from "../../../../api/useAxiosSecure";
 const Banner = () => {
   const axiosSecure = useAxiosSecure();
   const [searchQuery, setSearchQuery] = useState("");
-  const fallbackImage = "https://i.ibb.co/ymHdf9KT/download-4.jpg";
+  const fallbackImage = "https://ibb.co.com/JwwZ1L4x";
 
-  const { data: bannerData = [], isLoading, isError } = useQuery({
+  const {
+    data: bannerData = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["bannerData"],
     queryFn: async () => {
       const res = await axiosSecure.get("/banners/meals");
@@ -26,15 +30,19 @@ const Banner = () => {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-64">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-500"></div>
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-500"></div>
+      </div>
+    );
   }
 
   if (isError) {
-    return <div className="h-[80vh] flex items-center justify-center">
-      Error loading banner
-    </div>;
+    return (
+      <div className="h-[80vh] flex items-center justify-center">
+        Error loading banner
+      </div>
+    );
   }
 
   return (
@@ -50,24 +58,25 @@ const Banner = () => {
       >
         {bannerData.length > 0 ? (
           bannerData.map((slide, index) => {
-            const imageUrl = slide?.image?.startsWith('http') ? slide.image : fallbackImage;
-            
+            const imageUrl = slide?.image?.startsWith("http")
+              ? slide.image
+              : fallbackImage;
             return (
               <SwiperSlide key={index}>
-                <div 
-                  className="w-full h-full flex items-center justify-center bg-cover bg-center"
-                  style={{ 
+                <div
+                  className="w-full h-full flex items-center justify-center bg-cover bg-center rounded"
+                  style={{
                     backgroundImage: `url('${imageUrl}')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                   }}
                 >
-                  <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                  <div className="absolute inset-0 bg-opacity-40"></div>
                   <div className="relative z-10 text-center text-white px-5 max-w-4xl">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
                       {slide.title}
                     </h1>
-                    <p className="text-xl mb-8 drop-shadow-md">
+                    <p className="text-xl mb-2 drop-shadow-md">
                       {slide.description}
                     </p>
                   </div>
@@ -80,11 +89,12 @@ const Banner = () => {
             <div className="w-full h-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
               <div className="absolute inset-0 bg-black bg-opacity-30"></div>
               <div className="relative z-10 text-center text-white px-5 max-w-4xl">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+                <h1 className="text-4xl md:text-5xl font-bold mb-1 drop-shadow-lg">
                   Delicious Meals Await You
                 </h1>
                 <p className="text-xl mb-8 drop-shadow-md">
-                  Discover the best meals in town with authentic reviews from food lovers
+                  Discover the best meals in town with authentic reviews from
+                  food lovers
                 </p>
               </div>
             </div>
@@ -93,7 +103,7 @@ const Banner = () => {
       </Swiper>
 
       {/* Search form remains the same */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4 z-20">
+      <div className="absolute bottom-50 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4 z-20">
         <form onSubmit={handleSearch} className="join w-full">
           <input
             type="text"
