@@ -31,6 +31,9 @@ import AdminLogin from "../context/Adminlogin/AdminLogin";
 import AdminSettings from "../context/Adminlogin/AdminSettings";
 import Home from "../pages/page/Home/home/Home";
 import DashboardUser from "../pages/Dashboard/User/DashboardUser";
+import AboutPage from "../components/info/AboutPage";
+import HelpSupportPage from "../components/info/HelpSupportPage";
+import AnnouncementsPage from "../components/info/AnnouncementsPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +49,9 @@ export const router = createBrowserRouter([
       { path: "/meals/:id", element: <UserMealDetails /> },
       { path: "/upcoming-meals", element: <UpcomingMeals /> },
       { path: "/membershipSection", element: <MembershipSection /> },
+      { path: "/about", element: <AboutPage /> },
+      { path: "/help", element: <HelpSupportPage /> },
+      { path: "/announcements", element: <AnnouncementsPage /> },
 
       {
         path: "/checkout/:packageName",

@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router";
-import { FaBell, FaBars } from "react-icons/fa";
+import { FaBell, FaBars, FaInfoCircle, FaHome, FaUtensils, FaCalendarAlt, FaCreditCard } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
@@ -62,24 +62,52 @@ const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/" className="hover:text-primary">
-          Home
+        <NavLink to="/" className="hover:text-primary flex items-center gap-1">
+          <FaHome /> Home
         </NavLink>
       </li>
       <li>
-        <NavLink to="/meals" className="hover:text-primary">
-          Meals
+        <NavLink
+          to="/meals"
+          className="hover:text-primary flex items-center gap-1"
+        >
+          <FaUtensils /> Meals
         </NavLink>
       </li>
       <li>
-        <NavLink to="/upcoming-meals" className="hover:text-primary">
-          Upcoming Meals
+        <NavLink
+          to="/upcoming-meals"
+          className="hover:text-primary flex items-center gap-1"
+        >
+          <FaCalendarAlt /> Upcoming Meals
         </NavLink>
       </li>
       <li>
-        <NavLink to="/membershipSection" className="hover:text-primary">
-          Membership
+        <NavLink
+          to="/membershipSection"
+          className="hover:text-primary flex items-center gap-1"
+        >
+          <FaCreditCard /> Membership
         </NavLink>
+      </li>
+      <li className="dropdown dropdown-hover">
+        <label
+          tabIndex={0}
+          className="flex items-center gap-1 cursor-pointer hover:text-primary"
+        >
+          <FaInfoCircle /> Info
+        </label>
+        <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li>
+            <Link to="/about">About Hostel</Link>
+          </li>
+          <li>
+            <Link to="/help">Help & Support</Link>
+          </li>
+          <li>
+            <Link to="/announcements">Announcements</Link>
+          </li>
+        </ul>
       </li>
     </>
   );
