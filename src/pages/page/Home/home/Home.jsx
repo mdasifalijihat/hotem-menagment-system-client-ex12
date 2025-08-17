@@ -46,10 +46,10 @@ const Home = () => {
     },
       {
     id: 3,
-    name: "Tanvir",
+    name: "Salman Khan",
     role: "Teacher",
     feedback: "Healthy meals, quick service, and great quality overall!",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    avatar: "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202410/salman-khan-184038121-3x4.jpg?VersionId=qgG7jVG.W2qhC6wd0i4qC4E2r6dUwYZY",
     rating: 5,
   },
 

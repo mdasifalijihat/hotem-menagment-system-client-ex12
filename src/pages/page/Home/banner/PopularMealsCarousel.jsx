@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { FaHeart, FaStar } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -31,14 +32,14 @@ const PopularMealsCarousel = () => {
 
   if (isError)
     return (
-      <p className="text-center text-red-500 py-4">Failed to load popular meals.</p>
+      <p className="text-center text-red-500 py-4">
+        Failed to load popular meals.
+      </p>
     );
 
   return (
     <section className="my-10 px-4 md:px-10 py-4">
-      <h2 className="text-3xl font-bold text-center mb-6">
-        🍽️ Popular Meals
-      </h2>
+      <h2 className="text-3xl font-bold text-center mb-6">🍽️ Popular Meals</h2>
 
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
@@ -55,17 +56,35 @@ const PopularMealsCarousel = () => {
       >
         {data.map((meal) => (
           <SwiperSlide key={meal._id}>
-            <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-[1.02] mb-8">
+            <div className="bg-gradient-to-br from-yellow-50 to-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transition-transform hover:scale-[1.03] mb-8">
+              {/* Meal Image */}
               <img
                 src={meal.image}
                 alt={meal.title}
                 className="w-full h-48 sm:h-56 object-cover"
               />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-1">{meal.title}</h3>
-                <div className="flex justify-between text-sm text-gray-600">
-                  <p>❤️ Likes: {meal.likes}</p>
-                  <p>⭐ Rating: {meal.rating.toFixed(1)}</p>
+
+              {/* Content */}
+              <div className="p-4 space-y-2">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {meal.title}
+                </h3>
+
+                {/* Likes & Rating */}
+                <div className="flex justify-between items-center text-gray-600 text-sm mt-2">
+                  <span className="flex items-center gap-1">
+                    <FaHeart className="text-red-500" /> {meal.likes}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <FaStar className="text-yellow-400" />{" "}
+                    {meal.rating.toFixed(1)}
+                  </span>
+                </div>
+
+                {/* Category / Price (Optional) */}
+                <div className="flex justify-between items-center mt-2 text-gray-500 text-xs">
+                  <span>{meal.category}</span>
+                  <span>৳ {meal.price}</span>
                 </div>
               </div>
             </div>

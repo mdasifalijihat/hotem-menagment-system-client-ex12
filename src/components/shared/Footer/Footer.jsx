@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"; // react-router-dom import
 import { 
   FaFacebook, FaTwitter, FaInstagram, FaGithub, 
   FaHome, FaUtensils, FaCalendarAlt, FaUserPlus, 
-  FaLifeRing, FaPhone, FaQuestionCircle, FaFileContract, FaShieldAlt, FaCookieBite 
+  FaLifeRing, FaPhone, FaQuestionCircle, FaFileContract, FaShieldAlt, FaCookieBite, 
+  FaLinkedin
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -21,16 +22,16 @@ const Footer = () => {
             Serving students since 2025
           </p>
           <div className="flex gap-4 mt-5">
-            <a href="#" aria-label="Facebook" className="p-2 bg-blue-100 rounded-full hover:bg-blue-500 hover:text-white transition">
+            <a href="https://www.facebook.com/mdasifalijihat9" aria-label="Facebook" className="p-2 bg-blue-100 rounded-full hover:bg-blue-500 hover:text-white transition">
               <FaFacebook className="text-xl" />
             </a>
-            <a href="#" aria-label="Twitter" className="p-2 bg-sky-100 rounded-full hover:bg-sky-500 hover:text-white transition">
+            <a href="https://x.com/mdasifalijihat0" aria-label="Twitter" className="p-2 bg-sky-100 rounded-full hover:bg-sky-500 hover:text-white transition">
               <FaTwitter className="text-xl" />
             </a>
-            <a href="#" aria-label="Instagram" className="p-2 bg-pink-100 rounded-full hover:bg-pink-500 hover:text-white transition">
-              <FaInstagram className="text-xl" />
+            <a href="https://www.linkedin.com/in/md-asif-ali-jihat-976281217/" aria-label="Linkedin" className="p-2 bg-pink-100 rounded-full hover:bg-pink-500 hover:text-white transition">
+              <FaLinkedin className="text-xl" />
             </a>
-            <a href="#" aria-label="Github" className="p-2 bg-gray-100 rounded-full hover:bg-gray-700 hover:text-white transition">
+            <a href="https://github.com/mdasifalijihat" aria-label="Github" className="p-2 bg-gray-100 rounded-full hover:bg-gray-700 hover:text-white transition">
               <FaGithub className="text-xl" />
             </a>
           </div>
